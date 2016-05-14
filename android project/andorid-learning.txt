@@ -1,0 +1,159 @@
+two things in D:\users\vivekcha\Downloads
+
+java eclipse
+Andorid IM code
+
+The ADT andorid sdk in 
+
+C:\Users\vivekcha\Downloads\adt-bundle-windows-x86_64-20131030
+
+Nov: 18:
+---------
+reading contacts ....
+
+The Read from Contact and Write to Contact permissions should be inside AndroidManifest.xml.
+
+<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+<uses-permission android:name="android.permission.READ_CONTACTS"/>
+You need internet too :
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+eclipse stored @ C:\Users\vivekcha\Downloads same in D:
+
+
+REading contacts:
+
+								public class ReadContacts extends Activity {
+									/** Called when the activity is first created. */
+									@Override
+									public void onCreate(Bundle savedInstanceState) {
+										super.onCreate(savedInstanceState);
+										setContentView(R.layout.main);
+										TextView contactView = (TextView) findViewById(R.id.con);
+								 
+										Cursor cursor = getContacts();
+								 
+										while (cursor.moveToNext()) {
+											String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
+											contactView.append("Name: ");
+											contactView.append(displayName);
+											contactView.append("\n");
+										}
+									}
+								 
+									private Cursor getContacts() {
+										// Run query
+										Uri uri = ContactsContract.Contacts.CONTENT_URI;
+										String[] projection = new String[] { ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME };
+										String selection = ContactsContract.Contacts.IN_VISIBLE_GROUP + " = '" + ("1") + "'";
+										String[] selectionArgs = null;
+										String sortOrder = ContactsContract.Contacts.DISPLAY_NAME+ " COLLATE LOCALIZED ASC";
+										return managedQuery(uri, projection, selection, selectionArgs, sortOrder);
+									}
+								}
+
+								<?xml version="1.0" encoding="utf-8"?>
+								<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+									android:orientation="vertical"
+									android:layout_width="fill_parent"
+									android:layout_height="fill_parent"
+									>
+								<TextView 
+									android:id ="@+id/con"
+									android:layout_width="fill_parent"
+									android:layout_height="wrap_content"
+									/>
+								</LinearLayout>
+
+reading concats:
+http://saigeethamn.blogspot.com/2011/05/contacts-api-20-and-above-android.html
+http://www.edumobile.org/android/android-programming-tutorials/read-contacts-from-device/ [deprecated above]
+
+
+
+TelephonyManager tmgr=(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE) ;
+
+TelephonyManager tMgr =(TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
+  mPhoneNumber = tMgr.getLine1Number();
+
+  /*
+		There is no guaranteed solution to this problem because the phone number is not physically stored on all SIM-cards, or broadcasted from the network to the phone. This is especially true in some countries which requires physical address verification, with number assignment only happening afterwards. Phone number assignment happens on the network - and can be changed without changing the SIM card or device (e.g. this is how porting is supported).
+
+		I know it is pain, but most likely the best solution is just to ask the user to enter his/her phone number once and store it.
+		*/  
+
+
+hashphone numbers:
+====================
+
+mtd1 :
+String input = "some input string";
+int hashCode = input.hashCode();
+System.out.println("input hash code = " + hashCode);
+
+mtd2:
+
+public static final String md5(final String s) {
+    try {
+        // Create MD5 Hash
+        MessageDigest digest = java.security.MessageDigest
+                .getInstance("MD5");
+        digest.update(s.getBytes());
+        byte messageDigest[] = digest.digest();
+
+        // Create Hex String
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < messageDigest.length; i++) {
+            String h = Integer.toHexString(0xFF & messageDigest[i]);
+            while (h.length() < 2)
+                h = "0" + h;
+            hexString.append(h);
+        }
+        return hexString.toString();
+
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+    }
+    return "";
+}
+
+
+http://stackoverflow.com/questions/247304/mysql-what-data-type-to-use-for-hashed-password-field-and-what-length
+MD5 generates a 128-bit hash value. You can use CHAR(32) or BINARY(16)
+SHA-1 generates a 160-bit hash value. You can use CHAR(40) or BINARY(20)
+SHA-224 generates a 224-bit hash value. You can use CHAR(56) or BINARY(28)
+SHA-256 generates a 256-bit hash value. You can use CHAR(64) or BINARY(32)
+SHA-384 generates a 384-bit hash value. You can use CHAR(96) or BINARY(48)
+SHA-512 generates a 512-bit hash value. You can use CHAR(128) or BINARY(64)
+BCrypt generates an implementation-dependent 448-bit hash value. You might need CHAR(56), CHAR(60), CHAR(76), BINARY(56) or BINARY(60)
+
+
+backup: # mysqldump -u root -p[root_password] [database_name] > dumpfilename.sql
+
+restore:# mysql -u root -p[root_password] [database_name] < dumpfilename.sql
+
+http://157.59.143.86/android-im/username=newwuser&password=welcome&action=signUpUser&email=newuser@gmail.com&hashCode=33984888c562fbd110d34e15929f844c&friends=33984888c562fbd110d34e15929f844c,33984888c562fbd110d34e15929f844d,33984888c562fbd110d34e15929f844f
+
+sendingFriends:
+		username=newuser&password=welcome&action=signUpUser&email=newuser@gmail.com&hashCode=33984888c562fbd110d34e15929f844c&allContacts=5409df6bacd3ac4bf3d24e2c4402b55f,e7aaaf06328f6334ee69ae360b1580e9,&
+
+<br /><b>Parse error</b>:  syntax error, unexpected '[', expecting '(' in <b>D:\\xampp\\htdocs\\android-im\\index.php</b> on line <b>161</b><br />
+
+http://157.59.143.86/android-im/index.php?/username=newuser&password=welcome&action=signUpUser&email=newuser@gmail.com&hashCode=33984888c562fbd110d34e15929f844c&allContacts=5409df6bacd3ac4bf3d24e2c4402b55f,e7aaaf06328f6334ee69ae360b1580e9,&
+
+http://157.59.143.86/android-im/index.php?username=newuser&password=welcome&action=signUpUser&email=newuser%40gmail.com&hashCode=e7961f4a347db79144bb21ce2427d53a&allContacts=5409df6bacd3ac4bf3d24e2c4402b55f%2Ce7aaaf06328f6334ee69ae360b1580e9%2C&
+
+http://157.59.143.86/android-im/index.php?username=newuser&password=welcome&action=signUpUser&email=welcome%40gmail.com&hashCode=1d09cb9b23f85fb2531b530e528a413d&allContacts=1111111111%2Ce11170b8cbd2d74102651cb967fa28e5%2C9999999999%2Ce0ec043b3f9e198ec09041687e4d4e8d%2C9663399498%2Ccef1088961507d6bf31e2e46acf85095%2C5555215554%2C720cb6d428cd02ac99c0b4be116ad29d%2C7654914074%2C368c1ef97503182368ce52214e415c6a%2C7654914074%2C368c1ef97503182368ce52214e415c6a%2C&
+
+all details from SIM + DEVICE:
+		http://learnandroideasily.blogspot.com/2013/05/getting-imei-number-and-other-details.html
+
+
+		5555215554, 720cb6d428cd02ac99c0b4be116ad29d, fouthrAVC , newuser1
+		5555215556, 1d09cb9b23f85fb2531b530e528a413d, thirdAVD, newuser
+
+
+		http://157.59.143.86/android-im/index.php?username=newuser&password=welcome&action=signUpUser&email=welcome%40gmail.com&hashCode=5555215556&allContacts=1111111111%2C9999999999%2C9663399498%2C5555215554%2C7654914074%2C7654914074&
+
+		doing servermanager and CSS stuff
